@@ -1,5 +1,8 @@
 package src.com.core;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 public class Cluster {
 
 	private double[] edge1 = {0,0};
@@ -7,11 +10,32 @@ public class Cluster {
 	private double[] edge3 = {0,0};
 	private double[] edge4 = {0,0};
 	private String name = "";
+	private ArrayList<Instance> instances = new ArrayList<Instance>();
+	private String id = "";
 	
 	public Cluster() {
-		// TODO Auto-generated constructor stub
+		id = UUID.randomUUID().toString();
 	}
 
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+	public ArrayList<Instance> getInstances() {
+		return instances;
+	}
+
+	public void setInstances(ArrayList<Instance> instances) {
+		this.instances = instances;
+	}
+	
 	public double[] getEdge1() {
 		return edge1;
 	}
@@ -82,12 +106,14 @@ public class Cluster {
 		Cluster cObj = (Cluster) obj; 
 		double halfClusterSize = Math.abs((getEdge1()[0] - getEdge4()[0]) / 2.0d);
 		double tmp = (getCenterLat() - cObj.getCenterLat()) ;
-		if ( (getCenterLat() - cObj.getCenterLat()) < halfClusterSize) {
-			if ( (getCenterLong() - cObj.getCenterLong()) < halfClusterSize) {
+		if ( Math.abs(getCenterLat() - cObj.getCenterLat()) < halfClusterSize/2.0d) {
+			if ( (getCenterLong() - cObj.getCenterLong()) < halfClusterSize/2.0d) {
 				return true;
 			}
 		}
 		return false;
 	}
+
+
 	
 }

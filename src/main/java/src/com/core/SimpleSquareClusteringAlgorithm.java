@@ -2,11 +2,12 @@ package src.com.core;
 
 import java.util.ArrayList;
 
-public class SimpleSquareClusteringAlgorithm implements IClusteringAlgorithm {
+public class SimpleSquareClusteringAlgorithm extends ClusteringAlgorithm {
 
 	private double clustersize = 0.0005d;
-	
-	public ArrayList<Instance> buildCluster(ArrayList<Instance> instances) {
+
+
+	public void buildCluster(ArrayList<Instance> instances) {
 		
 		Instance referencePoint = instances.get(0);
 		
@@ -38,17 +39,23 @@ public class SimpleSquareClusteringAlgorithm implements IClusteringAlgorithm {
 			for (Cluster cluster : clusters) {
 				if (cluster.equals(c)) {
 					found = true;
+					cluster.getInstances().add(instance);
+					instance.setCluster(cluster);
 				}
 			}
-			if (!found)
+			if (!found) {
 				clusters.add(c);
+				c.getInstances().add(instance);
+				instance.setCluster(c);
+			}	
 			
-			instance.setCluster(c);
+			
 			
 		}
-		
-		return instances;
+		super.setClusters(clusters);
+		super.setInstances(instances);
 	}
+
 
 	public double getClustersize() {
 		return clustersize;

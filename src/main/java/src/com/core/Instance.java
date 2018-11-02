@@ -1,5 +1,6 @@
 package src.com.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Instance {
@@ -7,7 +8,7 @@ public class Instance {
 	
 	private double latitude;
 	private double longitude;
-	private String[] institutionClasses;
+	private ArrayList<Category> institutionClasses;
 	private Cluster cluster;
 	private String name;
 	
@@ -31,12 +32,12 @@ public class Instance {
 		this.longitude = longitude;
 	}
 
-	public String[] getInstitutionClasses() {
+	public ArrayList<Category> getInstitutionClasses() {
 		return institutionClasses;
 	}
 
-	public void setInstitutionClasses(String[] institutionClasses) {
-		this.institutionClasses = institutionClasses;
+	public void setInstitutionClasses(ArrayList<Category> arrayList) {
+		this.institutionClasses = arrayList;
 	}
 
 	public Cluster getCluster() {
@@ -57,15 +58,15 @@ public class Instance {
 	
 	public double[] oneHotEncode(HashMap<String, Integer> allInstitutionClasses) {
 		double[] onehots = new double[allInstitutionClasses.size()];
-		for (int i = 0; i < institutionClasses.length; i++) {
-			onehots[allInstitutionClasses.get(institutionClasses[i])] = 1.0d;
+		for (int i = 0; i < institutionClasses.size(); i++) {
+			onehots[allInstitutionClasses.get(institutionClasses.get(i).name)] = 1.0d;
 		}
 		return onehots;
 	}
 	
 	@Override
 	public String toString() {
-		return "" + getName() + " (" + getLatitude() + ", " + getLongitude() + "); " + getCluster().toString() + ";";
+		return "" + getName() + " (" + getLatitude() + ", " + getLongitude() + "); " + getCluster().toString() + " @" + getCluster().getName() + ";";
 	}
 	
 }
