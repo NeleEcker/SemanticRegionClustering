@@ -1,7 +1,0 @@
-src/com/core/IClusteringAlgorithm.class
-src/com/core/ClassOverlap.class
-src/com/core/ClusteringAlgorithm.class
-src/com/core/Cluster.class
-src/com/core/Processor.class
-src/com/core/SimpleSquareClusteringAlgorithm.class
-src/com/core/Instance.class

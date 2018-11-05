@@ -3,10 +3,11 @@ package src.com.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.UUID;
 
 public class Instance {
 	
-	
+	private String id;
 	private double latitude;
 	private double longitude;
 	private ArrayList<Category> institutionClasses;
@@ -14,7 +15,11 @@ public class Instance {
 	private String name;
 	
 	public Instance() {
-		// TODO Auto-generated constructor stub
+		id = UUID.randomUUID().toString();
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public double getLatitude() {
