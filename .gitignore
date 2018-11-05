@@ -1,6 +1,4 @@
-src/main/java/tmpFiles/
 target/
+.settings/
 .classpath
-.prject
-.DS_Store
-.settings
+.project
