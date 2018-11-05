@@ -3,6 +3,9 @@ package src.com.core;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import src.com.clustering.ClassOverlap;
+import src.com.clustering.DBScanClusteringAlgorithm;
+
 public class Processor {
 
 	public Processor() {
@@ -13,8 +16,13 @@ public class Processor {
 		
 		ArrayList<Instance> instances = createDummyInstances();
 		
-		SimpleSquareClusteringAlgorithm clusterAlg = new SimpleSquareClusteringAlgorithm();
-		clusterAlg.setClustersize(1.0);
+		DBScanClusteringAlgorithm clusterAlg = new DBScanClusteringAlgorithm();
+		clusterAlg.setEpsilon(0.01);
+		clusterAlg.setMinPoints(1);
+		
+		/*SimpleSquareClusteringAlgorithm clusterAlg = new SimpleSquareClusteringAlgorithm();
+		clusterAlg.setClustersize(1.0);*/
+		
 		clusterAlg.buildCluster(instances);
 		instances = clusterAlg.getInstances();
 		
@@ -26,7 +34,6 @@ public class Processor {
 		for (Instance instance : instances) {
 			System.out.println(instance.toString());
 		}
-		
 	}
 	
 	private ArrayList<Instance> createDummyInstances() {
@@ -42,8 +49,8 @@ public class Processor {
 		i = new Instance();
 		i.setInstitutionClasses(new ArrayList<Category>(Arrays.asList(new Category[]{new Category("Thing", 1.0), new Category("bar", 2.0)})));
 		i.setName("b");
-		i.setLatitude(50.001);
-		i.setLongitude(50.001);
+		i.setLatitude(50.0001);
+		i.setLongitude(50.0001);
 		instances.add(i);
 		
 		i = new Instance();

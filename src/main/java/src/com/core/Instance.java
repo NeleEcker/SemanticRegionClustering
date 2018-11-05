@@ -2,6 +2,7 @@ package src.com.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Instance {
 	
@@ -56,17 +57,49 @@ public class Instance {
 		this.name = name;
 	}
 	
+	public double getMaxWeight() {
+		double maxWeight = 0d;
+		for (Category category : institutionClasses) {
+			if (category.weight > maxWeight) {
+				maxWeight = category.weight;
+			}
+		}
+		return maxWeight;
+	}
+	
 	public double[] oneHotEncode(HashMap<String, Integer> allInstitutionClasses) {
 		double[] onehots = new double[allInstitutionClasses.size()];
 		for (int i = 0; i < institutionClasses.size(); i++) {
-			onehots[allInstitutionClasses.get(institutionClasses.get(i).name)] = 1.0d;
+			Iterator<String> iterator = allInstitutionClasses.keySet().iterator();
+			int onehotplace = 0;
+			for (int j = 0; iterator.hasNext(); j++) {
+				String value = iterator.next();
+				if (value.equals(institutionClasses.get(i).name))
+					onehotplace = j;
+			}
+			onehots[onehotplace] = 1.0d;
+		}
+		return onehots;
+	}
+	
+	public double[] oneHotEncodeWeighted(HashMap<String, Integer> allInstitutionClasses) {
+		double[] onehots = new double[allInstitutionClasses.size()];
+		for (int i = 0; i < institutionClasses.size(); i++) {
+			Iterator<String> iterator = allInstitutionClasses.keySet().iterator();
+			int onehotplace = 0;
+			for (int j = 0; iterator.hasNext(); j++) {
+				String value = iterator.next();
+				if (value.equals(institutionClasses.get(i).name))
+					onehotplace = j;
+			}
+			onehots[onehotplace] = 1.0d / getMaxWeight();
 		}
 		return onehots;
 	}
 	
 	@Override
 	public String toString() {
-		return "" + getName() + " (" + getLatitude() + ", " + getLongitude() + "); " + getCluster().toString() + " @" + getCluster().getName() + ";";
+		return "" + getName() + " (" + getLatitude() + ", " + getLongitude() + "); " + getCluster().toString() + " @" + getCluster().getName() + " (" + getCluster().getId() + ")" + ";";
 	}
 	
 }
