@@ -20,25 +20,27 @@ public class WebJson
 {
     @POST
     @Path("/json")
-    public Response downloadPdfFile(@Context UriInfo info)
+    public Response downloadPdfFile(@Context final UriInfo info)
     {
 
-    	String area = info.getQueryParameters().getFirst("area");
-    	String algorithm = info.getQueryParameters().getFirst("algorithm");
-    	System.out.println("Request received for area " + area + ".");
-    	
-    	
-    	FrontProcessor processor = new FrontProcessor();
-    	processor.process(area, algorithm);
-    	File tmpFile = GeoJsonFormatter.format(processor.getInstances());
-    	
         StreamingOutput fileStream =  new StreamingOutput()
         {
-            @Override
             public void write(java.io.OutputStream output) throws IOException, WebApplicationException
             {
                 try
                 {
+
+                	String area = info.getQueryParameters().getFirst("area");
+                	String algorithm = info.getQueryParameters().getFirst("algorithm");
+                	System.out.println("Request received for area " + area + ".");
+                	
+                	
+                	FrontProcessor processor = new FrontProcessor();
+                	processor.process(area, algorithm);
+                	File tmpFile = GeoJsonFormatter.format(processor.getInstances());
+                	
+                	
+                	
             		System.out.println("-> Returning results of size "+ ((int) (tmpFile.length()  / 1024)) +"KB ...");
             		;
                     java.nio.file.Path path = Paths.get(tmpFile.getAbsolutePath());

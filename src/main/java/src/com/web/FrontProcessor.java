@@ -26,14 +26,14 @@ public class FrontProcessor {
 		System.out.println("-> Creating dummy instances...");
 		ArrayList<Instance> instances = createDummyInstances();
 		
-		/*
+		
 		SimpleSquareClusteringAlgorithm clusterAlg = new SimpleSquareClusteringAlgorithm();
-		clusterAlg.setClustersize(1.0);*/
-
+		clusterAlg.setClustersize(1.0);
+/*
 		DBScanClusteringAlgorithm clusterAlg = new DBScanClusteringAlgorithm();
 		clusterAlg.setEpsilon(0.01);
 		clusterAlg.setMinPoints(1);
-		
+	*/	
 		System.out.println("-> Building clusters...");
 		clusterAlg.buildCluster(instances);
 		instances = clusterAlg.getInstances();
@@ -68,7 +68,7 @@ public class FrontProcessor {
 		i.setLongitude(50);
 		instances.add(i);
 		
-		for (int j = 0; j < 15000; j++) {
+		for (int j = 0; j < 10; j++) {
 			i = new Instance();
 			i.setInstitutionClasses(new ArrayList<Category>(Arrays.asList(new Category[]{new Category("Thing", 1.0), new Category("museum", 2.0)})));
 			i.setName("a");
