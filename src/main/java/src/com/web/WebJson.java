@@ -51,7 +51,7 @@ public class WebJson
                 }
                 catch (Exception e)
                 {
-                    throw new WebApplicationException("File Not Found !!");
+                    //throw new WebApplicationException("File Not Found !!");
                 }
             }
         };
