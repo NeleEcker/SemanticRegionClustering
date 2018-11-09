@@ -36,7 +36,7 @@ public class WebJson
                 	
                 	
                 	FrontProcessor processor = new FrontProcessor();
-                	processor.process(area, algorithm);
+                	processor.process("","", algorithm);
                 	File tmpFile = GeoJsonFormatter.format(processor.getInstances(), processor.getClusters());
                 	
                 	

@@ -21,7 +21,7 @@ public class FrontProcessor {
 		
 	}
 	
-	public void process(String area, String algorithm) {
+	public void process(String latitude, String longitude, String algorithm) {
 
 		System.out.println("-> Creating dummy instances...");
 		ArrayList<Instance> instances = createDummyInstances();
