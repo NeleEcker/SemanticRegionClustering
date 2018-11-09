@@ -1,6 +1,8 @@
 package src.com.core;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
 
 public class Cluster {
@@ -12,9 +14,26 @@ public class Cluster {
 	private String name = "";
 	private ArrayList<Instance> instances = new ArrayList<Instance>();
 	private String id = "";
+	private Color color = null;
 	
 	public Cluster() {
 		id = UUID.randomUUID().toString();
+		Random r = new Random();
+		color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
+	}
+
+
+	public Color getColor() {
+		return color;
+	}
+	
+	public String getHexColor() {
+		return "#"+Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
+	}
+
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 
