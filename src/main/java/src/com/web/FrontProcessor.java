@@ -11,6 +11,7 @@ import src.com.clustering.SimpleSquareClusteringAlgorithm;
 import src.com.core.Category;
 import src.com.core.Cluster;
 import src.com.core.Instance;
+import src.com.data.Dataset;
 
 public class FrontProcessor {
 
@@ -24,7 +25,7 @@ public class FrontProcessor {
 	public void process(String latitude, String longitude, String algorithm) {
 
 		System.out.println("-> Creating dummy instances...");
-		ArrayList<Instance> instances = createDummyInstances();
+		ArrayList<Instance> instances = new Dataset("8.476682", "49.483752").getDataset(); //new Dataset(latitude, longitude).getDataset(); //createDummyInstances();
 		
 		
 		SimpleSquareClusteringAlgorithm clusterAlg = new SimpleSquareClusteringAlgorithm();
