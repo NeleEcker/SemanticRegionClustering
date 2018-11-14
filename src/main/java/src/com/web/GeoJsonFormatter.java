@@ -25,6 +25,8 @@ public class GeoJsonFormatter {
 					"		  \"features\": [");
 			boolean needComma = false;
 			for (Instance instance : instances) {
+				if (instance.getCluster()==null)
+					continue;
 				if (needComma) {
 					needComma = false;
 					pw.println(",");
@@ -39,31 +41,39 @@ public class GeoJsonFormatter {
 						"      ]\n" + 
 						"    },\n" + 
 						"    \"properties\": {\n" + 
-						"      \"name\": \""+instance.getName()+"\"\n" + 
+						"      \"name\": \""+instance.getName()+"\",\n" + 
 						"      \"color\": \""+instance.getCluster().getHexColor()+"\"\n" + 
 						"    }\n" + 
 						"  }");
 				needComma = true;
 			}
 			for (Cluster cluster : clusters) {
-				
-				pw.print("{\n" + 
-						"		  \"type\": \"Feature\",\n" + 
-						"		  \"properties\": {\n" + 
-						"		    \"name\": \""+cluster.getId()+"\",\n" + 
-						"		  },\n" + 
-						"		  \"geometry\": {\n" + 
-						"		    \"type\": \"Polygon\",\n" + 
-						"		    \"coordinates\": [\n" + 
-						"		      [\n" + 
-						"		        ["+cluster.getEdge1()[0]+", "+cluster.getEdge1()[1]+"],\n" + 
-						"		        ["+cluster.getEdge2()[0]+", "+cluster.getEdge2()[1]+"],\n" + 
-						"		        ["+cluster.getEdge3()[0]+", "+cluster.getEdge3()[1]+"],\n" + 
-						"		        ["+cluster.getEdge4()[0]+", "+cluster.getEdge4()[1]+"],\n" + 
-						"		      ]\n" + 
-						"		    ]\n" + 
-						"		  }\n" + 
-						"		}");
+				if (cluster.getEdges().size() > 0) {
+					if (needComma) {
+						needComma = false;
+						pw.println(",");
+					}
+					cluster.orderEdges();
+					pw.print("{\n" + 
+							"		  \"type\": \"Feature\",\n" + 
+							"		  \"properties\": {\n" + 
+							"		    \"name\": \""+cluster.getName()+"\"\n" + 
+							"		  },\n" + 
+							"		  \"geometry\": {\n" + 
+							"		    \"type\": \"Polygon\",\n" + 
+							"		    \"coordinates\": [\n" + 
+							"		      [\n" + 
+							"		        ["+cluster.getEdges().get(0).latitude+", "+cluster.getEdges().get(0).longitude+"],\n" + 
+							"		        ["+cluster.getEdges().get(1).latitude+", "+cluster.getEdges().get(1).longitude+"],\n" + 
+							"		        ["+cluster.getEdges().get(2).latitude+", "+cluster.getEdges().get(2).longitude+"],\n" + 
+							"		        ["+cluster.getEdges().get(3).latitude+", "+cluster.getEdges().get(3).longitude+"],\n" + 
+							"		        ["+cluster.getEdges().get(0).latitude+", "+cluster.getEdges().get(0).longitude+"]\n" + 
+							"		      ]\n" + 
+							"		    ]\n" + 
+							"		  }\n" + 
+							"		}");
+					needComma = true;
+				}
 			}
 			
 			

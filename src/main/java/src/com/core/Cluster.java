@@ -2,19 +2,19 @@ package src.com.core;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 public class Cluster {
 
-	private double[] edge1 = {0,0};
-	private double[] edge2 = {0,0};
-	private double[] edge3 = {0,0};
-	private double[] edge4 = {0,0};
+	private List<Location> edges = new LinkedList<Location>();
 	private String name = "";
 	private ArrayList<Instance> instances = new ArrayList<Instance>();
 	private String id = "";
 	private Color color = null;
+	private boolean ordered = false;
 	
 	public Cluster() {
 		id = UUID.randomUUID().toString();
@@ -55,37 +55,15 @@ public class Cluster {
 		this.instances = instances;
 	}
 	
-	public double[] getEdge1() {
-		return edge1;
+	public List<Location> getEdges() {
+		return edges;
 	}
 
-	public void setEdge1(double[] edge1) {
-		this.edge1 = edge1;
+	public void addEdge(Location loc) {
+		this.edges.add(loc);
+		ordered = false;
 	}
 
-	public double[] getEdge2() {
-		return edge2;
-	}
-
-	public void setEdge2(double[] edge2) {
-		this.edge2 = edge2;
-	}
-
-	public double[] getEdge3() {
-		return edge3;
-	}
-
-	public void setEdge3(double[] edge3) {
-		this.edge3 = edge3;
-	}
-
-	public double[] getEdge4() {
-		return edge4;
-	}
-
-	public void setEdge4(double[] edge4) {
-		this.edge4 = edge4;
-	}
 
 	public String getName() {
 		return name;
@@ -98,19 +76,20 @@ public class Cluster {
 	@Override
 	public String toString() {
 		//Get cluster center
-		return "(" + getCenterLat() + "-" + getCenterLong() +")";
+		return "(" + this.getEdges().get(0).latitude + "-" + this.getEdges().get(0).longitude +")";
 	}
 	
+	
 	public double getCenterLat() {
-		double halfClusterSize = (getEdge1()[0] - getEdge2()[0]) / 2.0d;
-		double centerLat = (getEdge1()[0] + halfClusterSize);
-		double centerLong = (getEdge1()[1] + halfClusterSize);
+		this.orderEdges();
+		double halfClusterSize = (edges.get(0).latitude - edges.get(1).latitude) / 2.0d;
+		double centerLat = (edges.get(0).latitude + halfClusterSize);
 		return centerLat;
 	}
 	public double getCenterLong() {
-		double halfClusterSize = (getEdge1()[0] - getEdge2()[0]) / 2.0d;
-		double centerLat = (getEdge1()[0] + halfClusterSize);
-		double centerLong = (getEdge1()[1] + halfClusterSize);
+		this.orderEdges();
+		double halfClusterSize = (edges.get(0).latitude - edges.get(1).latitude) / 2.0d;
+		double centerLong = (edges.get(0).longitude + halfClusterSize);
 		return centerLong;
 	}
 	
@@ -123,16 +102,65 @@ public class Cluster {
 		}
 		
 		Cluster cObj = (Cluster) obj; 
-		double halfClusterSize = Math.abs((getEdge1()[0] - getEdge4()[0]) / 2.0d);
+		/* Former implementation
+		 * double halfClusterSize = Math.abs((getEdge1()[0] - getEdge4()[0]) / 2.0d);
+
 		double tmp = (getCenterLat() - cObj.getCenterLat()) ;
 		if ( Math.abs(getCenterLat() - cObj.getCenterLat()) < halfClusterSize/2.0d) {
 			if ( (getCenterLong() - cObj.getCenterLong()) < halfClusterSize/2.0d) {
 				return true;
 			}
+		}		 */
+		
+		boolean found = false;
+		LinkedList<Location> oEdges = (LinkedList<Location>) cObj.getEdges();
+		for (Location loc : oEdges) {
+			for (Location loc2 : this.getEdges()) {
+				if (loc.latitude == loc2.latitude && loc.longitude == loc2.longitude){
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				return false;
+			}
+			found = false;
 		}
-		return false;
+		
+		return true;
 	}
-
+	
+	public void orderEdges() {
+		if (edges.size() == 0) 
+			return;
+		if (ordered)
+			return;
+		
+		LinkedList<Location> newEdges = new LinkedList<>();
+		int pivotIndex = 0;
+		//Search for the lowest and most left point.
+		for (int i = 0; i < edges.size(); i++) {
+			if (edges.get(i).latitude < edges.get(pivotIndex).latitude || edges.get(i).longitude < edges.get(pivotIndex).longitude ) {
+				pivotIndex = i;
+			}
+		}
+		newEdges.add(edges.get(pivotIndex));
+		edges.remove(pivotIndex);
+		//Link the list by minimizing the distances between Locations; should work in most use-cases.
+		while (edges.size() > 0) {
+			pivotIndex = 0;
+			for (int i = 0; i < edges.size(); i++) {
+				if (edges.get(i).distance(newEdges.get(newEdges.size()-1)) < edges.get(pivotIndex).distance(newEdges.get(newEdges.size()-1))) {
+					pivotIndex = i;
+				}
+			}
+			newEdges.add(edges.get(pivotIndex));
+			edges.remove(pivotIndex);
+		}
+		
+		edges = newEdges;
+		ordered = true;
+	}
 
 	
 }

@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
- 
+
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -20,7 +22,7 @@ public class WebJson
 {
     @POST
     @Path("/json")
-    public Response downloadPdfFile(@Context final UriInfo info)
+    public Response downloadPdfFile(@Context final UriInfo info, @DefaultValue("8.476682") @QueryParam("latitude") String latitude, @DefaultValue("49.483752") @QueryParam("longitude") String longitude, @DefaultValue("simple") @QueryParam("algorithm") String algorithm)
     {
 
         StreamingOutput fileStream =  new StreamingOutput()
@@ -30,13 +32,11 @@ public class WebJson
                 try
                 {
 
-                	String area = info.getQueryParameters().getFirst("area");
-                	String algorithm = info.getQueryParameters().getFirst("algorithm");
-                	System.out.println("Request received for area " + area + ".");
+                	System.out.println("Request received for area (" + latitude + ", " + longitude+ ").");
                 	
                 	
                 	FrontProcessor processor = new FrontProcessor();
-                	processor.process("","", algorithm);
+                	processor.process(latitude, longitude, algorithm);
                 	File tmpFile = GeoJsonFormatter.format(processor.getInstances(), processor.getClusters());
                 	
                 	
@@ -51,6 +51,7 @@ public class WebJson
                 }
                 catch (Exception e)
                 {
+                	e.printStackTrace();
                     //throw new WebApplicationException("File Not Found !!");
                 }
             }

@@ -24,9 +24,10 @@ public class FrontProcessor {
 	
 	public void process(String latitude, String longitude, String algorithm) {
 
-		System.out.println("-> Creating dummy instances...");
-		ArrayList<Instance> instances = new Dataset("8.476682", "49.483752").getDataset(); //new Dataset(latitude, longitude).getDataset(); //createDummyInstances();
+		System.out.println("-> Crawling instances...");
+		ArrayList<Instance> instances = new Dataset(latitude, longitude).getDataset();//createDummyInstances();
 		
+		System.out.println("   #Instances:" + instances.size());
 		
 		SimpleSquareClusteringAlgorithm clusterAlg = new SimpleSquareClusteringAlgorithm();
 		clusterAlg.setClustersize(1.0);
