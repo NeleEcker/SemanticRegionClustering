@@ -30,11 +30,12 @@ public class ClassOverlap {
 			}
 			
 			double max = -1.0;
-			@SuppressWarnings("unused")
 			String maxKey = "";
+			@SuppressWarnings("rawtypes")
 			Iterator iterator = allInstitutionClasses.entrySet().iterator();
 			while (iterator.hasNext()) {
-			    Map.Entry entry = (Map.Entry) iterator.next();
+			    @SuppressWarnings("rawtypes")
+				Map.Entry entry = (Map.Entry) iterator.next();
 			    String key = (String) entry.getKey();
 			    double value = (Double) entry.getValue();
 			    if (value > max) {
@@ -42,7 +43,7 @@ public class ClassOverlap {
 			    	maxKey = key;
 			    }
 			}
-			cluster.setName(maxKey);
+			cluster.setCategory(new Category(maxKey, 1.0));
 			
 		}
 		

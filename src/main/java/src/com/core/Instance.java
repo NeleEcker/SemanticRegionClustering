@@ -104,7 +104,7 @@ public class Instance {
 	
 	@Override
 	public String toString() {
-		return "" + getName() + " (" + getLatitude() + ", " + getLongitude() + "); " + getCluster().toString() + " @" + getCluster().getName() + " (" + getCluster().getId() + ")" + ";";
+		return "" + getName() + " (" + getLatitude() + ", " + getLongitude() + "); " + getCluster().toString() + " @" + getCluster().getCategory().name + " (" + getCluster().getId() + ")" + ";";
 	}
 	
 }

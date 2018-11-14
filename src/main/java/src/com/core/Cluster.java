@@ -10,18 +10,26 @@ import java.util.UUID;
 public class Cluster {
 
 	private List<Location> edges = new LinkedList<Location>();
-	private String name = "";
+	private Category category;
 	private ArrayList<Instance> instances = new ArrayList<Instance>();
 	private String id = "";
 	private Color color = null;
 	private boolean ordered = false;
+	
 	
 	public Cluster() {
 		id = UUID.randomUUID().toString();
 		Random r = new Random();
 		color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
 	}
+	
+	public Category getCategory() {
+		return category;
+	}
 
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 	public Color getColor() {
 		return color;
@@ -62,15 +70,6 @@ public class Cluster {
 	public void addEdge(Location loc) {
 		this.edges.add(loc);
 		ordered = false;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	@Override

@@ -57,7 +57,7 @@ public class GeoJsonFormatter {
 					pw.print("{\n" + 
 							"		  \"type\": \"Feature\",\n" + 
 							"		  \"properties\": {\n" + 
-							"		    \"name\": \""+cluster.getName()+"\"\n" + 
+							"		    \"name\": \""+cluster.getCategory().name+"\"\n" + 
 							"		  },\n" + 
 							"		  \"geometry\": {\n" + 
 							"		    \"type\": \"Polygon\",\n" + 
