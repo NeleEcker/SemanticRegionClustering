@@ -36,8 +36,8 @@ public class GeoJsonFormatter {
 						"    \"geometry\": {\n" + 
 						"      \"type\": \"Point\",\n" + 
 						"      \"coordinates\": [\n" + 
-						"        "+instance.getLatitude()+",\n" + 
-						"        "+instance.getLongitude()+"\n" + 
+						"        "+instance.getLongitude()+",\n" + 
+						"        "+instance.getLatitude()+"\n" + 
 						"      ]\n" + 
 						"    },\n" + 
 						"    \"properties\": {\n" + 
@@ -63,11 +63,11 @@ public class GeoJsonFormatter {
 							"		    \"type\": \"Polygon\",\n" + 
 							"		    \"coordinates\": [\n" + 
 							"		      [\n" + 
-							"		        ["+cluster.getEdges().get(0).latitude+", "+cluster.getEdges().get(0).longitude+"],\n" + 
-							"		        ["+cluster.getEdges().get(1).latitude+", "+cluster.getEdges().get(1).longitude+"],\n" + 
-							"		        ["+cluster.getEdges().get(2).latitude+", "+cluster.getEdges().get(2).longitude+"],\n" + 
-							"		        ["+cluster.getEdges().get(3).latitude+", "+cluster.getEdges().get(3).longitude+"],\n" + 
-							"		        ["+cluster.getEdges().get(0).latitude+", "+cluster.getEdges().get(0).longitude+"]\n" + 
+							"		        ["+cluster.getEdges().get(0).longitude+", "+cluster.getEdges().get(0).latitude+"],\n" + 
+							"		        ["+cluster.getEdges().get(1).longitude+", "+cluster.getEdges().get(1).latitude+"],\n" + 
+							"		        ["+cluster.getEdges().get(2).longitude+", "+cluster.getEdges().get(2).latitude+"],\n" + 
+							"		        ["+cluster.getEdges().get(3).longitude+", "+cluster.getEdges().get(3).latitude+"],\n" + 
+							"		        ["+cluster.getEdges().get(0).longitude+", "+cluster.getEdges().get(0).latitude+"]\n" + 
 							"		      ]\n" + 
 							"		    ]\n" + 
 							"		  }\n" + 

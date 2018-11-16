@@ -30,7 +30,7 @@ public class FrontProcessor {
 		System.out.println("   #Instances:" + instances.size());
 		
 		SimpleSquareClusteringAlgorithm clusterAlg = new SimpleSquareClusteringAlgorithm();
-		clusterAlg.setClustersize(1.0);
+		clusterAlg.setClustersize(0.01);
 /*
 		DBScanClusteringAlgorithm clusterAlg = new DBScanClusteringAlgorithm();
 		clusterAlg.setEpsilon(0.01);
@@ -39,6 +39,12 @@ public class FrontProcessor {
 		System.out.println("-> Building clusters...");
 		clusterAlg.buildCluster(instances);
 		instances = clusterAlg.getInstances();
+		Instance x = null;
+		for (Instance instance : instances) {
+			if (instance.getName().contains("Reißinsel")) {
+				x = instance;
+			}
+		}
 
 		System.out.println("-> Computing cluster category...");
 		ArrayList<Cluster> cluster = clusterAlg.getClusters();

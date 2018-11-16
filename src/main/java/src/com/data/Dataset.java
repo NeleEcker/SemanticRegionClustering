@@ -17,7 +17,7 @@ import src.com.core.Instance;
 	private ArrayList<Instance> dataset;
 	private String longitude;
 	private String latitude;
- 	public Dataset(String longitude, String latitude) {
+ 	public Dataset(String latitude, String longitude) {
 		// call with Dataset data = new Dataset("8.476682", "49.483752"); to have the Wasserturm as center
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -57,6 +57,7 @@ import src.com.core.Instance;
 					firstnode = false;
 				} else {
 					Instance instance = this.createInstance(name, coordinates, categories);
+					categories = new ArrayList<String>();
 					// System.out.println(instance.toString());
 					instances.add(instance);
 				}
@@ -79,13 +80,15 @@ import src.com.core.Instance;
 			String categoryName = categories.get(i).toString();
 			Double categoryWeight = 0.0;
 			if (categoryName.contains("HistoricThing") || categoryName.contains("TourismThing") || categoryName.contains("Shop")
-					|| categoryName.contains("EmergencyThing") || categoryName.contains("SportThing") || categoryName.contains("RailwayThing")
+					|| categoryName.contains("EmergencyThing") || categoryName.contains("SportThing") || categoryName.contains("School") 
 					|| categoryName.contains("Office") || categoryName.contains("Leisure") || categoryName.contains("ManMadeThing")) {
 				categoryWeight = 1.5;
 			} else if (categoryName.contains("Amenity")) {
 				categoryWeight = 1.0;
+			} else if (categoryName.contains("RailwayThing")) {
+				categoryWeight = 0.1;
 			} else if (categoryName.contains("Restaurant") || categoryName.contains("University") || categoryName.contains("Museum")
-					|| categoryName.contains("School") || categoryName.contains("Bar") || categoryName.contains("Bakery") || categoryName.contains("Cinema")
+					|| categoryName.contains("Bar") || categoryName.contains("Bakery") || categoryName.contains("Cinema")
 					|| categoryName.contains("Theater") || categoryName.contains("Hospital") || categoryName.contains("Church")) {
 				categoryWeight = 2.0;
 			}
